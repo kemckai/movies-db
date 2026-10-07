@@ -655,7 +655,7 @@ document.addEventListener("keydown", (event) => {
 
 readUrl();
 
-fetch("data/movies.json")
+fetch("data/movies.json?v=6")
   .then((response) => {
     if (!response.ok) throw new Error(`Could not load movies (${response.status})`);
     return response.json();

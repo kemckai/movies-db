@@ -330,6 +330,60 @@ def compact(movie: dict) -> dict:
     return kept
 
 
+EXTRA_FILMS = [
+    {
+        "id": "tt35721003",
+        "title": "Kill Trip",
+        "overview": (
+            "A group of carefree festivalgoers hitch a ride toward what should be the best weekend of their lives, "
+            "but when they trust the wrong stranger, their journey spirals into a waking nightmare. As their numbers "
+            "begin to dwindle and bodies mysteriously vanish, survival becomes a desperate race against an unseen evil. "
+            "Not everyone will live to see Austin."
+        ),
+        "genres": ["Horror", "Thriller"],
+        "director": "Kristian McKay",
+        "cast": "Samaire Armstrong, Corin Nemec, Stelio Savante, Todd Jenkins, Brittany McVicker",
+        "releaseDate": "2026-07-17",
+        "year": 2026,
+        "runtime": 96,
+        "language": "en",
+        "status": "Released",
+        "certificate": "R",
+        "companies": ["Obscura Film", "Truewonder Film"],
+        "homepage": "https://killtripmovie.com/",
+        "imdb": "tt35721003",
+    },
+    {
+        "id": "tt1357186",
+        "title": "Summer Orbit",
+        "originalTitle": "Orbita del verano",
+        "overview": (
+            "Love is being destroyed by the power and greed of the world. "
+            "A man boards a train with only his memories and a dream folded in his pocket."
+        ),
+        "genres": ["Drama"],
+        "director": "Kristian McKay",
+        "cast": "Jorge Elias Madrid, Rita Mubarak",
+        "year": 2008,
+        "runtime": 24,
+        "language": "es",
+        "status": "Released",
+        "homepage": "https://www.kristianmckay.com/summer-orbit",
+        "imdb": "tt1357186",
+    },
+]
+
+
+def add_extra_films(movies: list[dict]) -> list[dict]:
+    known = set()
+    for movie in movies:
+        if movie.get("imdb"):
+            known.add(movie["imdb"])
+        known.add(str(movie.get("id")))
+    added = [film for film in EXTRA_FILMS if film["id"] not in known and film.get("imdb") not in known]
+    return added + movies
+
+
 def main() -> int:
     tmdb_path = Path(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_CSV
     imdb_path = Path(sys.argv[2]) if len(sys.argv) > 2 else IMDB_CSV
@@ -356,7 +410,7 @@ def main() -> int:
             continue
         tmdb.append(imdb_as_movie(imdb))
 
-    movies = [compact(movie) for movie in tmdb]
+    movies = add_extra_films([compact(movie) for movie in tmdb])
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(movies, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     posters = sum(1 for movie in movies if movie.get("poster"))
