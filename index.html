@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Marquee — Movie Search</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,450;6..72,560;6..72,650&family=Outfit:wght@380;480;580&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="top">
+        <div class="brand">
+          <p class="eyebrow">Film index</p>
+          <h1>Marquee</h1>
+        </div>
+        <form id="search-form" class="search" role="search">
+          <label class="sr-only" for="q">Search movies</label>
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="search-icon">
+            <circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.7" />
+            <path d="M16 16.5 20 20.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+          </svg>
+          <input
+            id="q"
+            name="q"
+            type="search"
+            placeholder="Search titles, directors, cast…"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <kbd class="hint">/</kbd>
+        </form>
+      </header>
+
+      <section class="controls" aria-label="Filters">
+        <div id="genre-chips" class="chips" role="toolbar" aria-label="Genres"></div>
+        <div class="selects">
+          <label>
+            Sort
+            <select id="sort">
+              <option value="relevance">Relevance</option>
+              <option value="popular">Popularity</option>
+              <option value="rating">Rating</option>
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+              <option value="title">Title</option>
+            </select>
+          </label>
+          <label>
+            Decade
+            <select id="decade">
+              <option value="">Any decade</option>
+            </select>
+          </label>
+          <label>
+            Rating
+            <select id="rating">
+              <option value="0">Any rating</option>
+              <option value="6">6.0 and up</option>
+              <option value="7">7.0 and up</option>
+              <option value="8">8.0 and up</option>
+            </select>
+          </label>
+          <button id="clear" type="button" class="text-btn" hidden>Clear</button>
+        </div>
+      </section>
+
+      <p id="status" class="status" role="status">Loading the archive…</p>
+      <main id="results" class="grid" aria-live="polite"></main>
+      <div class="more-wrap">
+        <button id="more" type="button" class="more" hidden>Show more</button>
+      </div>
+    </div>
+
+    <dialog id="detail">
+      <div class="detail-layout">
+        <button id="close-detail" type="button" class="close" aria-label="Close">Close</button>
+        <div id="detail-body"></div>
+      </div>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>
