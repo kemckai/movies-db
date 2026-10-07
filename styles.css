@@ -195,10 +195,24 @@ select {
 
 .text-btn,
 .more,
-.close {
+.close,
+.suggest {
   height: 36px;
   padding: 0 14px;
   color: var(--gold);
+}
+
+.suggest {
+  border: 0;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--gold-ink);
+  font-weight: 580;
+}
+
+.suggest:disabled {
+  opacity: 0.45;
+  cursor: default;
 }
 
 .more,
@@ -400,9 +414,8 @@ dialog::backdrop {
   margin-right: 72px;
 }
 
-.link-row {
-  display: flex;
-  gap: 16px;
+.detail-layout .suggest {
+  margin-top: 22px;
 }
 
 .detail-kicker {

@@ -51,6 +51,7 @@ const els = {
   decade: document.querySelector("#decade"),
   rating: document.querySelector("#rating"),
   clear: document.querySelector("#clear"),
+  suggest: document.querySelector("#suggest"),
   status: document.querySelector("#status"),
   results: document.querySelector("#results"),
   more: document.querySelector("#more"),
@@ -320,6 +321,7 @@ function render() {
 
   els.more.hidden = visible.length >= results.length;
   els.clear.hidden = !filtersActive();
+  els.suggest.disabled = !state.movies.length;
   syncGenreChips();
   if (state.activeId != null) {
     const movie = state.movies.find((item) => item.id === state.activeId);
@@ -497,6 +499,13 @@ function fillDetail(movie) {
     links.append(link);
   }
   if (links.childElementCount) body.append(links);
+
+  const another = document.createElement("button");
+  another.type = "button";
+  another.className = "suggest";
+  another.textContent = "Suggest another";
+  another.addEventListener("click", suggestMovie);
+  body.append(another);
 }
 
 function textBlock(label, text) {
@@ -565,6 +574,24 @@ function onSearchInput() {
   render();
 }
 
+function suggestMovie() {
+  const matches = currentResults().map((item) => item.movie);
+  const rated = matches.filter((movie) => movie.voteAverage);
+  const choices = rated.length ? rated : matches;
+  if (!choices.length) {
+    els.status.textContent = "Nothing to suggest with these filters.";
+    return;
+  }
+  let pick = choices[Math.floor(Math.random() * choices.length)];
+  if (choices.length > 1) {
+    while (pick.id === state.activeId) {
+      pick = choices[Math.floor(Math.random() * choices.length)];
+    }
+  }
+  openDetail(pick);
+}
+
+els.suggest.addEventListener("click", suggestMovie);
 els.q.addEventListener("input", onSearchInput);
 document.querySelector("#search-form").addEventListener("submit", (event) => event.preventDefault());
 els.sort.addEventListener("change", () => {
