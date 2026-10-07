@@ -55,9 +55,9 @@ select {
 
 .top {
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 28px;
-  align-items: end;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 18px 22px;
+  align-items: center;
   margin-bottom: 22px;
 }
 
@@ -208,6 +208,12 @@ select {
   background: var(--gold);
   color: var(--gold-ink);
   font-weight: 580;
+  white-space: nowrap;
+}
+
+.top .suggest {
+  height: 52px;
+  padding: 0 18px;
 }
 
 .suggest:disabled {
@@ -520,6 +526,11 @@ dialog::backdrop {
   .brand h1 {
     max-width: none;
     font-size: 32px;
+  }
+
+  .top .suggest {
+    height: 46px;
+    width: 100%;
   }
 
   .hint {
