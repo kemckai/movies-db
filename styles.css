@@ -71,11 +71,12 @@ select {
 
 .brand h1 {
   margin: 0;
+  max-width: 11em;
   font-family: var(--serif);
   font-weight: 560;
-  font-size: 42px;
+  font-size: 34px;
   letter-spacing: -0.03em;
-  line-height: 0.9;
+  line-height: 0.95;
 }
 
 .search {
@@ -506,7 +507,8 @@ dialog::backdrop {
   }
 
   .brand h1 {
-    font-size: 36px;
+    max-width: none;
+    font-size: 32px;
   }
 
   .hint {
